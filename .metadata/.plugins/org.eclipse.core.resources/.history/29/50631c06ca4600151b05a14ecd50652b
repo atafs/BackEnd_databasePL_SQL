@@ -1,0 +1,54 @@
+package db;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+
+public class Driver {
+	
+	public static void main(String[] args) {
+		
+		try {
+			
+			db_connect();
+			
+			//2.CREATE A STATEMENT
+			Statement myStmt = myConn.createStatement();
+			
+			//3.EXECUTE QUERY
+			ResultSet myRs = myStmt.executeQuery("SELECT * FROM world.city");
+			
+			//4.PROCESS THE RESULT SET
+			while (myRs.next()) {
+				String resultQuery = "";
+				resultQuery += "Name = " + myRs.getString("Name") + " => ";
+				resultQuery += "CountryCode = " + myRs.getString("CountryCode");
+				System.out.println(resultQuery);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/** */
+	public void db_connect() {
+		try {
+			//1. GET CONNECTION TO DATABASE
+			Class.forName("com.mysql.jdbc.Driver");
+
+            String url1 = "jdbc:mysql://localhost:3306";
+            String user = "root";
+            String password = "Tespis1979";
+
+			Connection myConn = DriverManager.getConnection(url1, user, password);
+			if (myConn != null) {
+				System.out.println("Connected to the database!!!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
