@@ -1,1 +1,1 @@
-SHOW user
+SHOW user;
